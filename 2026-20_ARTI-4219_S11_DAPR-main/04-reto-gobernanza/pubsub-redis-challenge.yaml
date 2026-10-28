@@ -1,0 +1,22 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: order-pubsub
+  namespace: default
+spec:
+  type: pubsub.redis
+  version: v1
+  metadata:
+    - name: redisHost
+      value: "redis-master.redis.svc.cluster.local:6379"
+
+    - name: redisPassword
+      value: ""
+
+    # TTL de los mensajes publicados en este componente.
+    - name: ttlInSeconds
+      value: "120"
+
+    # Dapr reemplaza {namespace} por el namespace del servicio consumidor.
+    - name: consumerID
+      value: "order-subscriber-{namespace}"
